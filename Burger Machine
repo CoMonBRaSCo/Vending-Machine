@@ -1,0 +1,107 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+void Menu();
+void Order();
+double Price(int* o);
+
+int main() 
+{	
+	//Prints Menu
+	Menu();
+	printf("\n");
+
+	//Gets the order from customer and calculates the overall price
+	Order();			
+
+	return(0);
+}
+
+//Prints Menu
+void Menu()
+{		
+	int i;
+	char type[4][100] = {"BURGERS", "INGREDIENTS", "CALORIE(kcal)", "PRICES"};
+	char burger[8][100] = {"Hamburger", "Cheeseburger", "Steak Burger", "Chicken Burger", "Veggie Burger", "Steamed Burger", "Fish Burger", "Slugburger"};
+	char ingredients[8][800] = {"(patty+onion+tomato+pickle)", "(patty+cheddar+onion+tomato)", "(steak+fries+tomato+mustard)", "(chicken+fries+lettuce)", "(wheat+bean+mushroom+carrot)", "(beef+onion+water+pepper)", "(fish+flour+oil+egg)", "(pork+mustard+onion+fries)"};
+	int calorie[8] = {294, 303, 290, 283, 176, 227, 380, 197};
+	double price[8] = {3.95, 2.79, 5.8, 4.4, 6.4, 4, 9.9, 1.2};
+	
+	for (i = 0; i < 4; i++) {		
+		printf("    %-20s", type[i]);		
+	}		
+	printf("\n|------------------------------------------------------------------------------------|\n");
+	for (i = 0; i < 8; i++) {		
+		printf("|%d) %-14s %-35s %-20d %-.2lf$    |\n", i+1, burger[i], ingredients[i], calorie[i], price[i]); 			
+	}
+}
+
+//Gets the order from customer and calculates the overall price
+void Order()
+{	
+	char confirm;
+	int order;
+	double value, overall = 0;
+		
+	do {
+		printf("\nWould you like to order? (y or n) : ");
+		scanf(" %c", &confirm);	
+
+		if (confirm == 'Y' || confirm == 'y') {
+			printf("What's your order? (1 to 8) : ");
+			scanf("%d", &order);
+
+			//Calculate the overall price and display			
+			value = Price(&order);
+			overall += value;
+		}
+		else
+			if (confirm == 'N' || confirm == 'n') {
+				printf("\nThank You and Stay Healthy.\nPRICE = %.2lf$\n", overall);
+			}
+			else
+				printf("ERROR!!! Please Try Again.\n");
+	} while (confirm == 'Y' || confirm == 'y');
+}
+
+//Returns the Burger's price
+double Price (int* o)
+{
+	switch (*o) {
+	case 1: 
+		printf("Hamburger = 3.95$\n");
+		return(3.95);
+		break;
+	case 2:
+		printf("Cheeseburger = 2.79$\n");
+		return(2.79);
+		break;
+	case 3:
+		printf("Steak Burger = 5.80$\n");
+		return(5.8);
+		break;
+	case 4:
+		printf("Chicken Burger = 4.40$\n");
+		return(4.4);
+		break;
+	case 5:
+		printf("Veggie Burger = 6.40$\n");
+		return(6.4);
+		break;
+	case 6:
+		printf("Steamed Burger = 4.00$\n");
+		return(4);
+		break;
+	case 7:
+		printf("Fish Burger = 9.90$\n");
+		return(9.9);
+		break;
+	case 8:
+		printf("Slugburger = 1.20$\n");
+		return(1.2);
+		break;
+	default:
+		printf("ERROR!!! Please Try Again.\n");
+		exit(-1);		
+	}									
+}
